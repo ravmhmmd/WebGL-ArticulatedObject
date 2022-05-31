@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Articulated Models</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="./css/style.css" />
+    </head>
+    <body>
+        <div class="header">
+            <h1>Articulated Model</h1>
+        </div>
+        <div class="containers">
+            <div class="canvas-container">
+                <canvas id="canvas" width="512px" height="512px"></canvas>
+            </div>
+            <div class="controller-container">
+                <h1>Controllers</h1>
+                <hr />
+                <div style="display: flex">
+                    <div style="width:25vw;">
+                        <div class="controller">
+                            <h6>Current Texture</h6>
+                            <select id="texture-selector">
+                                <option value="0">Image</option>
+                                <option value="1">Environment</option>
+                                <option value="2">Bump</option>
+                            </select>
+                        </div>
+
+                        <div class="controller">
+                            <h6>Current Image</h6>
+                            <select id="image-selector">
+                                <option value="../../img/wall.jpg">Wall</option>
+                                <option value="../../img/bump.jpg">Bump Wall</option>
+                                <option value="../../img/rocks.jpg">Rock</option>
+                            </select>
+                        </div>
+
+                        <div class="controller">
+                            <h6>Current Bump Source</h6>
+                            <select id="bump-selector">
+                                <option value="../../img/bump_normal.png">Bump Normal</option>
+                                <option value="../../img/bump.jpg">Bump</option>
+                                <option value="../../img/bumpskin.jpg">Bump Skin</option>
+                            </select>
+                        </div>
+
+                        <div class="controller">
+                            <h6>Rotate Along Axis</h6>
+                            <label for="x-axis">X&nbsp;</label>
+                            <input
+                                type="range"
+                                name="x-rotation"
+                                id="x-rotation"
+                                min="0"
+                                max="360"
+                                step="0.01"
+                            />
+                            <br />
+                            <label for="y-axis">Y&nbsp;</label>
+                            <input
+                                type="range"
+                                name="y-rotation"
+                                id="y-rotation"
+                                min="0"
+                                max="360"
+                                step="0.01"
+                            />
+                            <br />
+                            <label for="z-axis">Z&nbsp;</label>
+                            <input
+                                type="range"
+                                name="z-rotation"
+                                id="z-rotation"
+                                min="0"
+                                max="360"
+                                step="0.01"
+                            />
+                        </div>
+                        <div class="controller">
+                            <h6>Shader and Texture Mode</h6>
+                            <label for="shader-mode" style="font-size: smaller;">Active&nbsp;</label>
+                            <input type="checkbox" name="shader-mode" id="shader-mode"></input>
+                        </div>
+                        <div class="controller">
+                            <h6>Animation</h6>
+                            <label for="animation-mode" style="font-size: smaller;">Active&nbsp;</label>
+                            <input type="checkbox" name="animation-mode" id="animation-mode"></input>
+                        </div>
+                    </div>
+                    <hr style="height: 70vh; padding: 0; margin-right: 30px"/>
+                    <div style="width:25vw;">
+                        <div class="controller">
+                            <h6>Camera Handler</h6>
+                            <label for="camera-angle">Angle</label>
+                            <input type="range" name="camera-angle" id="camera-angle" step="1" min="-75" max="75">
+                        </div>
+                        <div class="controller">
+                            <h6>Zoom in Zoom Out</h6>
+                            <label for="zoom">Zoom</label>
+                            <input type="range" name="camera-zoom" id="camera-zoom" min="0.1" value="1" step="0.01" max="10">
+                        </div>
+                        <div class="controller">
+                            <h6>Utilities</h6>
+                            <button id="save-button">Save</button>
+                        </div>
+                        <div class="controller">
+                            <input type="file" id="file-input" name="file-input" value="file-input">
+                            <button id="load-button">Load</button>
+                        </div>
+                        <div class="controller">
+                            <button id="help-button">Help</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table id="tableParts">
+        </table>
+        <!-- The Modal -->
+        <div id="helpModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close" id="close">&times;</span>
+                <h4>Texture</h4>
+                <p>Untuk memilih texture object yang diinginkan, gunakan dropdown list pada "Current Texture". Terdapat 3 pilihan texture yaitu Image, Environtment, dan Bump</p>
+                <h4>Texture : Image</h4>
+                <p>Pada saat menggunakan texture Image, untuk memilih Image yang akan digunakan pada texture gunakan dropdown list pada "Current Image". Terdapat 3 pilihan Image yaitu Wall, Bump Wall, dan Rock</p>
+                <h4>Texture : Bump</h4>
+                <p>Pada saat menggunakan texture Bump, untuk memilih Bump Surce yang akan digunakan pada texture gunakan dropdown list pada "Current Bump Source". Terdapat 3 pilihan Image yaitu Bump Normal, Bump, dan Bump Skin</p>
+                <h4>Rotasi</h4>
+                <p>Untuk melakukan rotasi, gunakan slider "Rotate Along Axis" dan terdapat 3 rotasi terhadap sumbu x, y, dan z </p>
+                <h4>Shader Mode</h4>
+                <p>Untuk mengaktifkan shader mode tekan checkbox bertulisan "active" pada "Shader and Texture Mode", jika centang maka shader mode aktif</p>
+                <h4>Animation</h4>
+                <p>Untuk mengaktifkan animation tekan checkbox bertulisan "active" pada "Animation", jika centang maka animation mode aktif</p>
+                <h4>Camera Handler</h4>
+                <p>Untuk mengatur sudut penglihatan, dapat mengatur slider dengan tulisan "Angle"</p>
+                <p>Sedangkan untuk mengatur kamera untuk memperbesar atau memperkecil view, tekan tombol "Zoom In" untuk memperbesar / mendekat dan "Zoom Out" untuk memperkecil / menjauh</p>
+                <h4>Object Part</h4>
+                <p>Untuk melihat gerakan bagian setiap part dari object, gunakan slider sesuai part yang ingin digerakkan</p>
+                <h4>Utilities</h4>
+                <p>Untuk melakukan penyimpanan model bentuk, tekan tombol "Save" dan file berekstensi json akan menyimpan model tersebut</p>
+                <p>Untuk dapat memuat model dari file, dapat gunakan tombol input file terlebih dahulu dan pilih file model berekstensi json  kemudian tekan tombol load untuk menggambar model dari file tersebut</p>
+            </div>
+        
+        </div>
+    </body>
+    <script type="text/javascript" src="./src/models/models.js"></script>
+    <script type="text/javascript" src="./src/helpers/help.js"></script>
+    <script type="text/javascript" src="./src/helpers/konstan.js"></script>
+    <script type="text/javascript" src="./src/helpers/math.js"></script>
+    <script type="text/javascript" src="./src/helpers/matrix.js"></script>
+    <script type="text/javascript" src="./src/helpers/loadSave.js"></script>
+    <script type="text/javascript" src="./src/helpers/GlUtils.js"></script>
+    <script type="text/javascript" src="./src/helpers/GlUnit.js"></script>
+    <script type="text/javascript" src="./src/index.js"></script>
+</html>
